@@ -398,3 +398,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+.env
+.idea
+__pycache__/
+
+*/__pycache__/
