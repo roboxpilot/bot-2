@@ -33,7 +33,7 @@ class MissingInfoAdapter:
             missing_field = request.currentMessage.payload.text
             logger.info(f"Processing missing info request for field: {missing_field}")
             prompt = self.generate_missing_info_prompt(request, missing_field)
-            response = make_api_call(prompt)
+            # response = make_api_call(prompt)
             response = make_api_call_missing(prompt)
             logger.debug(f"Missing info response: {response.strip()}")
             return response.strip()

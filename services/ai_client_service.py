@@ -229,10 +229,10 @@ def make_api_call_greeting(prompt: str) -> str:
 
 def make_api_call_missing(prompt: str) -> str:
     try:
-        logger.info(f"Making API call to {Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT.value}")
-        if Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT == "groq":
+        logger.info(f"Making API call to {Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT}")
+        if Config.MODEL_FINAL_MSG_SELECTED_MODEL_CLIENT == "groq":
             response = client.chat.completions.create(
-                model=Config.get_model_name(),
+                model=Config.MODEL_FINAL_MSG_SELECTED_MODEL_GROQ,
                 messages=[
                     {"role": "system",
                      "content": "You are a helpful assistant that extracts information and formats it as JSON."},
@@ -242,9 +242,9 @@ def make_api_call_missing(prompt: str) -> str:
             )
             logger.debug(f"Groq API response: {response.choices[0].message.content}")
             return response.choices[0].message.content
-        elif Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT == "openai":
-            response = client.chat.completions.create(
-                model=Config.get_model_name(),
+        elif Config.MODEL_FINAL_MSG_SELECTED_MODEL_CLIENT == "openai":
+            response = open_ai_client.chat.completions.create(
+                model=Config.MODEL_FINAL_MSG_MODEL_OPENAI,
                 messages=[
                     {"role": "system",
                      "content": "You are a helpful assistant that extracts information and formats it as JSON."},
@@ -254,17 +254,17 @@ def make_api_call_missing(prompt: str) -> str:
             )
             logger.debug(f"OpenAI API response: {response.choices[0].message.content}")
             return response.choices[0].message.content
-        elif Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT == "claude":
+        elif Config.MODEL_FINAL_MSG_SELECTED_MODEL_CLIENT == "claude":
             response = client.completions.create(
-                model=Config.get_model_name(),
+                model=Config.MODEL_FINAL_MSG_SELECTED_MODEL_GROQ,
                 prompt=f"Human: {prompt}\n\nAssistant:",
                 max_tokens_to_sample=1000
             )
             logger.debug(f"Claude API response: {response.completion}")
             return response.completion
     except Exception as e:
-        logger.error(f"Error in {Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT.value} API call: {str(e)}", exc_info=True)
-        raise APICallError(Config.GENERAL_CONVERSATION_SELECTED_MODEL_CLIENT.value, str(e))
+        logger.error(f"Error in {Config.MODEL_FINAL_MSG_SELECTED_MODEL_CLIENT} API call: {str(e)}", exc_info=True)
+        raise APICallError(Config.MODEL_FINAL_MSG_SELECTED_MODEL_CLIENT, str(e))
 
 def make_image_api_call(prompt: str, image_data: str) -> str:
     try:
@@ -332,11 +332,11 @@ def make_classification_call(prompt: str) -> str:
             )
             result = json.dumps({"classification": response.classification})
             
-        elif Config.SELECTED_MODEL == ModelType.CLAUDE:
+        elif Config.CLASSIFICATION_SELECTED_MODEL_CLIENT == ModelType.CLAUDE:
             # For Claude, use regular API call since it doesn't support instructor
-            response = make_api_call(prompt)
+            response = None
             result = response  # Claude should return properly formatted JSON
-            
+
         logger.debug(f"Classification API response: {result}")
         return result
         
