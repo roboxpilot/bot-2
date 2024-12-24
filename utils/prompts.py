@@ -1,40 +1,37 @@
 PRODUCT_CONVERSATION_CLASSIFIER_PROMPT = """
-You are an AI assistant tasked with determining whether a given conversation message is related to specific product creation details or if it's a general/exploratory conversation. Your goal is to classify the message accurately.
+You are an AI assistant tasked with determining whether a given conversation message is related to specific product creation details or if it's a general/exploratory conversation.
 
 ### Context:
-- Product-related conversations MUST include SPECIFIC details about:
-  - Concrete product specifications (exact dimensions, materials, colors)
-  - Detailed feature descriptions
-  - product name , validity
-  - Precise design elements
-  - Target market specifications
-  - Exact pricing or cost details
-  - If the user says they need change , modify or update product details like examples (Product Name,product Description,Product Family, Product Group, Product Offer Price,POP Type,Price Category,Price Mode,Product Specification Type,Data Allowance,Voice Allowance)
+- Product-related conversations include ANY messages with:
+  - Specific product details (dimensions, materials, features, data amounts)
+  - Product modifications (changing names, values, or any attributes)
+  - Exact specifications or pricing
+  - ANY request to update/modify/change product parameters
+  - Direct responses to product detail forms/templates
 
 - General conversations include:
-  - Vague statements about wanting to create products
-  - Questions about the product creation process
-  - Exploratory discussions without specific details
-  - Mentions of tools or methods without product specifics
-  - Initial inquiries about product creation
+  - Vague statements about products without specifics
+  - Questions about the process
+  - Initial inquiries or greetings
+  - General discussion without details
 
 ### Examples:
+<example>
 Product-related:
-- "I want to create a product with some data for some valitiy"
-- "create a product with 10gb data or some data with price or dollar "
-- "Creating a mobile app with user authentication and payment processing features"
-
+- "Create a product with 10GB data."
+- "Update the product name to Data29."
+- "Change the validity to 30 days."
+  
 General conversation:
-- "I want to create a product"
-- "How do I start making products?"
-- "Can I create a product by uploading an image?"
-- "What's the best way to design a product?"
-- "I'm thinking about creating something"
+- "I want to create a product."
+- "How do I start?"
+- "What's the best way to design?"
+</example>
 
 ### Instructions:
-1. Carefully analyze the given message.
-2. Classify as product_related ONLY if specific product details are provided.
-3. Classify as general_conversation if the message is exploratory or lacks specific details.
+1. Analyze the message AND any preceding context.
+2. Classify as product_related if ANY specific details or modifications are mentioned.
+3. Classify as general_conversation ONLY if no specific details exist.
 4. Respond with the classification in JSON format only.
 
 ### Message to classify:
@@ -42,8 +39,55 @@ General conversation:
 
 ### Classification (product_related/general_conversation):
 Respond in JSON format only.
-
 """
+
+
+# PRODUCT_CONVERSATION_CLASSIFIER_PROMPT = """
+# You are an AI assistant tasked with determining whether a given conversation message is related to specific product creation details or if it's a general/exploratory conversation. Your goal is to classify the message accurately.
+#
+# ### Context:
+# - Product-related conversations MUST include SPECIFIC details about:
+#   - Concrete product specifications (exact dimensions, materials, colors)
+#   - Detailed feature descriptions
+#   - product name , validity
+#   - Precise design elements
+#   - Target market specifications
+#   - Exact pricing or cost details
+#   - If the user says they need change , modify or update product details like examples (Product Name,product Description,Product Family, Product Group, Product Offer Price,POP Type,Price Category,Price Mode,Product Specification Type,Data Allowance,Voice Allowance)
+#
+# - General conversations include:
+#   - Vague statements about wanting to create products
+#   - Questions about the product creation process
+#   - Exploratory discussions without specific details
+#   - Mentions of tools or methods without product specifics
+#   - Initial inquiries about product creation
+#
+# ### Examples:
+# Product-related:
+# - "I want to create a product with some data for some valitiy"
+# - "create a product with 10gb data or some data with price or dollar "
+# - "Creating a mobile app with user authentication and payment processing features"
+#
+# General conversation:
+# - "I want to create a product"
+# - "How do I start making products?"
+# - "Can I create a product by uploading an image?"
+# - "What's the best way to design a product?"
+# - "I'm thinking about creating something"
+#
+# ### Instructions:
+# 1. Carefully analyze the given message.
+# 2. Classify as product_related ONLY if specific product details are provided.
+# 3. Classify as general_conversation if the message is exploratory or lacks specific details.
+# 4. Respond with the classification in JSON format only.
+#
+# ### Message to classify:
+# {message}
+#
+# ### Classification (product_related/general_conversation):
+# Respond in JSON format only.
+#
+# """
 
 
 class Prompts:
