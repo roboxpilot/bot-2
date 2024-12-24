@@ -42,7 +42,7 @@ async def conversation_endpoint(request: ConversationRequest):
     try:
         conversationId = request.sender.phoneNumber
         print("Conversation ID:", conversationId)
-
+        logger.info(f"Incoming message to conversation: {request.model_dump_json()}")
         # Handle image messages
         if request.currentMessage.messageType == "image":
             image_boolean = True
