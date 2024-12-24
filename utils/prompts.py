@@ -151,6 +151,9 @@ Please confirm whether the user wants to make changes to an EXISTING product spe
   * "update product name to daily5gb"
   * "change price mode to normal"
   * "set data allowance to 5GB"
+  
+  CONFIRMATION REQUEST 
+  * "proceed , confirm , or anything confirming the conversation  then reply with true "
 
 User message:
 {message}
