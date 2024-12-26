@@ -6,7 +6,7 @@ from services.plan_extractor_service import extract_plan
 from logger import setup_logger
 
 logger = setup_logger(__name__)
-
+schema_cache = {}
 def format_messages(messages: List[MessageItem]) -> List[Message]:
     logger.debug(f"Formatting {len(messages)} messages")
     return [
@@ -43,9 +43,13 @@ async def handle_conversation(request: ConversationRequest) -> Dict[str, Any]:
         "data_allowance":"",
         "voice_allowance":""
     }
+    if schema_cache.get(request.conversationId) is not None:
+        logger.info(f"taking from schema cache for {request.conversationId}")
+        product_schema = schema_cache.get(request.conversationId)
     logger.debug(f"Extracting plan with schema: {product_schema}")
     extracted_plan = extract_plan(formatted_messages, product_schema)
     logger.debug(f"Extracted plan: {extracted_plan}")
+    product_schema[request.conversationId] = extracted_plan
     return extracted_plan
 
 def handle_conversation_general(message: str) -> str:
