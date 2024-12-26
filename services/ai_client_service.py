@@ -269,7 +269,7 @@ def make_api_call_missing(prompt: str) -> str:
 def make_image_api_call(prompt: str, image_data: str) -> str:
     try:
         logger.info("Making image API call to OpenAI")
-        response = image_client.chat.completions.create(
+        response = open_ai_client.chat.completions.create(
             model=Config.MODEL_IMAGE_OPENAI,
             messages=[
                 {
@@ -286,7 +286,7 @@ def make_image_api_call(prompt: str, image_data: str) -> str:
         return response.choices[0].message.content
     except Exception as e:
         logger.error(f"Error in OpenAI image API call: {str(e)}", exc_info=True)
-        raise APICallError(Config.MODEL_IMAGE_OPENAI.value, str(e))
+        raise APICallError(Config.MODEL_IMAGE_OPENAI, str(e))
         
         
 def make_classification_call(prompt: str) -> str:
