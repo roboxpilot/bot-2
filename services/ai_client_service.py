@@ -270,7 +270,7 @@ def make_image_api_call(prompt: str, image_data: str) -> str:
     try:
         logger.info("Making image API call to OpenAI")
         response = image_client.chat.completions.create(
-            model=Config.OPENAI_IMAGE_MODEL,
+            model=Config.MODEL_IMAGE_OPENAI,
             messages=[
                 {
                     "role": "user",
@@ -286,7 +286,7 @@ def make_image_api_call(prompt: str, image_data: str) -> str:
         return response.choices[0].message.content
     except Exception as e:
         logger.error(f"Error in OpenAI image API call: {str(e)}", exc_info=True)
-        raise APICallError(Config.SELECTED_MODEL.value, str(e))
+        raise APICallError(Config.MODEL_IMAGE_OPENAI.value, str(e))
         
         
 def make_classification_call(prompt: str) -> str:

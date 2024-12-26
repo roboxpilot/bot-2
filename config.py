@@ -41,6 +41,11 @@ class Config:
     MODEL_FINAL_MSG_MODEL_OPENAI = os.getenv("MODEL_FINAL_MSG_MODEL_OPENAI", "gpt-4o")
 
 
+    MODEL_IMAGE_CLIENT = os.getenv("MODEL_IMAGE_CLIENT", "groq")
+    MODEL_IMAGE_GROQ = os.getenv("MODEL_IMAGE_GROQ", "llama3-70b-8192")
+    MODEL_IMAGE_OPENAI = os.getenv("MODEL_IMAGE_OPENAI", "gpt-4o")
+
+
     # Image processing model
     IMAGE_PROCESSING_MODEL: ModelType = ModelType.OPENAI
 
